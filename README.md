@@ -1,4 +1,4 @@
-# posc301
+# POSC301
 # Deficits, Inflation, and Party 🏛️
 
 An interactive Streamlit dashboard that simulates whether larger U.S. federal deficits are associated with higher next-year inflation, and whether that effect is stronger under Republican presidents.
