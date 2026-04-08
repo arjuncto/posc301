@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spend Trend</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Personal finance dashboard</p>
+        <h1>Spend Trend</h1>
+        <p class="hero-copy">Track income, watch spending patterns, and keep a clearer view of your balance.</p>
+      </div>
+      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">Dark mode</button>
+    </header>
+
+    <main class="dashboard">
+      <section class="panel panel-form">
+        <div class="panel-heading">
+          <h2>Add Transaction</h2>
+          <p>Capture money in and out with a date and category.</p>
+        </div>
+
+        <form id="transactionForm" class="transaction-form">
+          <label>
+            Title
+            <input id="title" type="text" placeholder="Groceries" required>
+          </label>
+
+          <div class="field-row">
+            <label>
+              Amount
+              <input id="amount" type="number" min="0.01" step="0.01" placeholder="45.90" required>
+            </label>
+
+            <label>
+              Date
+              <input id="date" type="date" required>
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label>
+              Type
+              <select id="type">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </label>
+
+            <label>
+              Category
+              <select id="category">
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Bills">Bills</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Health">Health</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Salary">Salary</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            Notes
+            <textarea id="notes" rows="3" placeholder="Optional details"></textarea>
+          </label>
+
+          <button class="primary-button" type="submit">Save Transaction</button>
+        </form>
+      </section>
+
+      <section class="panel panel-summary">
+        <div class="panel-heading">
+          <h2>Overview</h2>
+          <p>Your current snapshot.</p>
+        </div>
+
+        <div class="summary-grid">
+          <article class="summary-card">
+            <span>Total Balance</span>
+            <strong id="balance">$0.00</strong>
+          </article>
+          <article class="summary-card">
+            <span>Total Income</span>
+            <strong id="totalIncome">$0.00</strong>
+          </article>
+          <article class="summary-card">
+            <span>Total Expenses</span>
+            <strong id="totalExpense">$0.00</strong>
+          </article>
+          <article class="summary-card">
+            <span>This Month</span>
+            <strong id="monthlyExpense">$0.00</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel panel-chart">
+        <div class="panel-heading">
+          <h2>7-Day Expense Trend</h2>
+          <p>Daily totals for the past week.</p>
+        </div>
+        <canvas id="trendChart" width="760" height="280" aria-label="Expense trend chart"></canvas>
+      </section>
+
+      <section class="panel panel-breakdown">
+        <div class="panel-heading">
+          <h2>Expense Breakdown</h2>
+          <p>Top categories by spend.</p>
+        </div>
+        <div id="breakdownList" class="breakdown-list"></div>
+      </section>
+
+      <section class="panel panel-history">
+        <div class="history-toolbar">
+          <div>
+            <h2>Transactions</h2>
+            <p>Review, filter, and remove entries.</p>
+          </div>
+
+          <div class="filters" role="tablist" aria-label="Transaction filters">
+            <button class="filter-chip active" type="button" data-filter="all">All</button>
+            <button class="filter-chip" type="button" data-filter="income">Income</button>
+            <button class="filter-chip" type="button" data-filter="expense">Expenses</button>
+          </div>
+        </div>
+
+        <ul id="transactionList" class="transaction-list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

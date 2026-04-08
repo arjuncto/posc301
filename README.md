@@ -1,80 +1,39 @@
-# POSC301
-# Deficits, Inflation, and Party 🏛️
+# Deficits, Inflation, and Presidential Party
 
-An interactive Streamlit dashboard that simulates whether larger U.S. federal deficits are associated with higher next-year inflation, and whether that effect is stronger under Republican presidents.
+A Streamlit dashboard that uses real U.S. government data to explore whether larger federal deficits are associated with higher inflation, and whether that relationship looks different under Democratic and Republican presidencies.
 
-## Research Question
-Since 1980, are larger U.S. federal deficits associated with higher inflation in the following year, and why does this relationship differ under Democratic versus Republican presidents?
+## Main app
 
-## Hypothesis
-Since 1980, larger U.S. federal deficits are associated with higher next-year inflation, and this effect is stronger under Republican presidents.
+`inflation_simulationV10.py`
 
-## What This Dashboard Does
-- Simulates yearly U.S. data from 1980–2025
-- Lets the user adjust:
-  - year range
-  - base inflation
-  - deficit effect
-  - Republican deficit boost
-  - oil shock effect
-  - recession effect
-  - random variation
-- Visualizes:
-  - deficits and next-year inflation over time
-  - the relationship between deficits and next-year inflation
-  - average simulated values by administration
-- Displays a simulated dataset and allows CSV download
-## Simulation Equations
+## Run locally
 
-This dashboard uses a simple simulation model to represent the relationship between federal deficits, inflation, presidential party, recessions, and oil shocks over time.
-
-### 1. Presidential Party
-Party_t = 1 if the president in year t is Republican  
-Party_t = 0 if the president in year t is Democratic
-
-### 2. Recession Indicator
-Recession_t = 1 if year t is a recession year  
-Recession_t = 0 otherwise
-
-### 3. Simulated Federal Deficit
-Deficit_t = 3.0 + 1.0(Recession_t) + 0.65(sine time pattern) + random noise
-
-In selected years, an extra deficit spike is added.
-
-### 4. Simulated Oil Shock
-OilShock_t = random noise + selected spike years
-
-### 5. Simulated Next-Year Inflation
-Inflation_(t+1) = base inflation  
-+ deficit effect × Deficit_t  
-+ oil effect × OilShock_t  
-+ recession effect × Recession_t  
-+ Republican boost × (Deficit_t × Party_t)  
-+ random noise
-
-With the default settings in the dashboard:
-
-Inflation_(t+1) = 2.1  
-+ 0.22 × Deficit_t  
-+ 0.55 × OilShock_t  
-- 0.65 × Recession_t  
-+ 0.12 × (Deficit_t × Party_t)  
-+ random noise
-
-### Interpretation
-The simulation assumes that larger deficits are associated with higher next-year inflation, oil shocks raise inflation, recessions reduce inflationary pressure, and the deficit effect is stronger under Republican presidents.
-
-### Purpose
-These equations are used to visualize the logic of the research design. The dashboard is a simulation tool, not a final real-world statistical test.
-
-## Built With
-- Python
-- Streamlit
-- Plotly
-- Pandas
-- NumPy
-
-## Run Locally
 ```bash
 python3 -m pip install -r requirements.txt
-python3 -m streamlit run inflation_simulationV8.py
+streamlit run inflation_simulationV10.py
+```
+
+## Data used
+
+This version does not use simulated values.
+
+It uses a cleaned local panel in `data/official_fiscal_inflation_panel.csv`, built from:
+
+- OMB Historical Table 1.2 for federal surplus or deficit as a percent of GDP
+- BLS CPI-U historical tables for annual average CPI-U values
+
+## Important design choice
+
+OMB publishes surpluses as positive and deficits as negative. In the dashboard, that sign is flipped so higher plotted values always mean larger deficits. The original OMB sign is still preserved in the downloadable panel.
+
+## Source links
+
+- GovInfo / OMB Table 1.2: https://www.govinfo.gov/app/details/BUDGET-2025-TAB/BUDGET-2025-TAB-2-2
+- BLS historical CPI-U archive: https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-201901.pdf
+- BLS U.S. city average CPI table: https://www.bls.gov/regions/northeast/data/consumerpriceindex_us_table.htm
+
+## Notes
+
+- The OMB FY2025 historical table includes estimate rows for 2024-2029. Those estimated rows are excluded.
+- The main dashboard default aligns fiscal year deficit in year `t` with CPI-U inflation in year `t+1`.
+- The app is descriptive and presentation-ready, but it is not a causal identification strategy on its own.
